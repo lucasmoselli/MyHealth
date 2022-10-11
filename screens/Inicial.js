@@ -11,6 +11,10 @@ const Inicial = (props) => {
     props.navigation.navigate('MudarSenha')
   }
 
+  const goToTelaCriarConta = () => {
+    props.navigation.navigate('Cadastro')
+  }
+
 
   return (
     <View style = {styles.body}>    
@@ -25,7 +29,7 @@ const Inicial = (props) => {
       </View>
       <MyInput email = "E-mail" senha = "Senha"></MyInput>   
       <TouchableOpacity style = {styles.buttonCriarConta}>
-        <Text style = {styles.buttonTexto}> Criar minha Conta</Text>
+        <Text style = {styles.buttonTexto} onPress = {goToTelaCriarConta}> Criar minha Conta</Text>
       </TouchableOpacity>
       <TouchableOpacity style = {styles.buttonNovaSenha}>
         <Text style = {styles.buttonTexto} onPress = {goToTelaMudarSenha}>Esqueci minha senha</Text>
