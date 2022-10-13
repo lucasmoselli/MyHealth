@@ -1,8 +1,30 @@
-import React from "react";
-import { View, StyleSheet, Text, TextInput, TouchableOpacity} from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, Button, Platform} from "react-native";
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 import MyHealth from "../components/MyHealth";
 
+
 const Cadastro = () =>{
+    
+    const [date, setDate] = useState(new Date())
+    const [show, setShow] = useState(false)
+    const [text, setText] = useState('')
+
+    const onChange = (event, selectedDate) => {
+        setShow(false)
+        setDate(selectedDate)
+
+        let tempDate = new Date(selectedDate)
+        let data = tempDate.getDate() + '/'  + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear()
+        setText(data)
+    }
+
+    const showMode = () => {
+        setShow(true)
+        
+    }
+
     return(
         <View>
             <MyHealth></MyHealth>
@@ -16,6 +38,21 @@ const Cadastro = () =>{
                 </View>
                 <View style = {styles.rotulo}>
                     <Text style = {styles.rotuloTextoData}>Data Nascimento</Text>
+                    <View style = {{backgroundColor: "white", height: 35, width: 110, marginRight: 10}}>
+                        <Text>{text}</Text>
+                    </View>
+                    <View style = {styles.buttonData}>
+                        <Button style = {styles.buttonDataFormat}title= "Data" onPress={() => showMode()}></Button>
+                    </View>
+                    {show &&(
+                        <DateTimePicker 
+                        testID="dateTimePicker"
+                        value = {date}
+                        mode = {'date'}
+                        is24Hour = {true}
+                        display = "default"
+                        onChange={onChange} />
+                    )}
                 </View>
                 <View style = {styles.rotulo}>
                     <Text style = {styles.rotuloTextoEmail}>E-mail</Text>
@@ -100,13 +137,11 @@ const styles = StyleSheet.create({
         paddingLeft: 50
     },
     rotuloInput:{
-        color: "#3F92C5",
+        color: "#419ED7",
         backgroundColor: "white",
-        width: "55%",
-        height: 28,
-        lineHeight: 1,
-        fontSize: 16,
-     
+        width:200,
+        height: 35,
+        
     },
     buttonCadastrar:{
         width: 150,
@@ -123,5 +158,11 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     
+    buttonData: {
+        width: "20%",
+    },
+
+    buttonDataFormat:{
+    }
     })
 export default Cadastro
