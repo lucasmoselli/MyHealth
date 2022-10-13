@@ -1,11 +1,13 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image} from 'react-native';
-import MyInput from '../components/Login';
+import Login from '../components/Login';
 
 const Inicial = (props) => { 
 
-  
+  const goToTelaHome = () =>{
+    props.navigation.navigate('Home')
+  }
 
   const goToTelaMudarSenha = () => {
     props.navigation.navigate('MudarSenha')
@@ -27,7 +29,10 @@ const Inicial = (props) => {
         <Text style = {styles.subtitulo}>Controle as suas vacinas</Text>
         <Text style = {styles.subtitulo}>e fique seguro</Text>
       </View>
-      <MyInput email = "E-mail" senha = "Senha"></MyInput>   
+      <Login email = "E-mail" senha = "Senha"></Login>  
+      <TouchableOpacity style = {styles.buttonEntrar}>
+        <Text style = {styles.buttonTexto} onPress = {goToTelaHome}>Entrar</Text>
+       </TouchableOpacity>       
       <TouchableOpacity style = {styles.buttonCriarConta}>
         <Text style = {styles.buttonTexto} onPress = {goToTelaCriarConta}> Criar minha Conta</Text>
       </TouchableOpacity>
@@ -86,6 +91,18 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 15,
     fontWeight: "bold"
+  },
+
+  buttonEntrar:{
+    alignSelf: "center",
+    paddingHorizontal: 50,
+    paddingVertical: 5,
+    backgroundColor: "#49B976",
+    borderRadius: 5,
+    borderColor: "#37BD6D",
+    alignItems: "center",
+    marginTop: 30,
+    marginBottom: 50
   },
 
   buttonCriarConta:{

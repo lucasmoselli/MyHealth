@@ -1,10 +1,14 @@
 import React from 'react';
 import { TextInput, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { NavigationContainer, StackActions } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const MyInput = (props) => {
+const Login = (props) => {
+
 
     const {email, senha, valorEmail, valorSenha} = props;
 
+    
     return(
         <View style = {styles.login}>
             <View style = {styles.loginFlex}>
@@ -15,9 +19,6 @@ const MyInput = (props) => {
                 <Text style = {styles.rotuloTexto}>{senha}</Text>
                 <TextInput value = {valorSenha} style = {styles.rotuloInput} secureTextEntry={true}></TextInput>
             </View>
-            <TouchableOpacity style = {styles.buttonEntrar}>
-                <Text style = {styles.buttonTexto}>Entrar</Text>
-            </TouchableOpacity>      
         </View>
     )
 }
@@ -68,4 +69,4 @@ const styles = StyleSheet.create({
     
 })
 
-export default MyInput;
+export default Login;
