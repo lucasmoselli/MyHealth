@@ -5,6 +5,7 @@ import Inicial from './screens/Inicial'
 import MudarSenha from './screens/MudarSenha'
 import Cadastro from './screens/Cadastro'
 import Home from "./screens/Home";
+import CriarVacina from "./screens/CriarVacina";
 
 const Stack = createNativeStackNavigator()
 
@@ -17,6 +18,7 @@ const App = () => {
         <Stack.Screen name = "Home" component={Home}></Stack.Screen>
         <Stack.Screen name = "Cadastro" component={Cadastro}></Stack.Screen>
         <Stack.Screen name = "MudarSenha" component={MudarSenha}></Stack.Screen>
+        <Stack.Screen name = "CriarVacina" component={CriarVacina}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

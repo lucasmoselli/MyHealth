@@ -1,15 +1,14 @@
-
 import React from "react";
-import { View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native'
-import MyHealth from "../components/MyHealth";
+import { View, StyleSheet, TouchableOpacity, Text} from 'react-native'
 
 
 
-const MinhasVacinas = (props) =>{
 
+const ProximasVacinas = () =>{
     const goToTelaCriarVacinas = () => {
         props.navigation.navigate('CriarVacina')
     }
+
     return(
         <View >
             <View style = {styles.body}>
@@ -47,4 +46,4 @@ const styles = StyleSheet.create({
 
     },
 })
-export default MinhasVacinas
+export default ProximasVacinas
