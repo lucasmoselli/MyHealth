@@ -1,17 +1,31 @@
-import React from "react";
+import React, {useState} from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native";
 import MyHealth from "../components/MyHealth";
 
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../config/firebase";
+
 const MudarSenha = () =>{
+    const [email, setEmail] = useState()
+
+    const recuperarSenha = () => {
+        sendPasswordResetEmail(auth, email)
+        .then(() => {
+            console.log('deu bom')
+        })
+        .catch((error) => {
+            console.log('deu ruim')
+        })
+    }
     return(
         <View >
             <MyHealth></MyHealth>
             <View style = {styles.body}>
                 <View style = {styles.emailFlex}>
                     <Text style = {styles.rotuloTexto}>E-mail</Text>
-                    <TextInput style = {styles.rotuloInput} placeholder = "Digite seu e-mail"></TextInput>
+                    <TextInput style = {styles.rotuloInput} placeholder = "Digite seu e-mail" value = {email} onChangeText = {setEmail}></TextInput>
                 </View>
-                <TouchableOpacity style = {styles.buttonMudarSenha}>
+                <TouchableOpacity style = {styles.buttonMudarSenha} onPress = {recuperarSenha}>
                     <Text style = {styles.buttonTexto}> Recuperar Senha</Text>
                 </TouchableOpacity>
             </View>

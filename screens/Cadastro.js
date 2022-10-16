@@ -1,15 +1,29 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, TextInput, TouchableOpacity, Button, Platform} from "react-native";
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, Button, Platform, ProgressViewIOSComponent} from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth} from '../config/firebase'
 
 import MyHealth from "../components/MyHealth";
 
 
-const Cadastro = () =>{
+const Cadastro = (props) =>{
     
     const [date, setDate] = useState(new Date())
     const [show, setShow] = useState(false)
     const [text, setText] = useState('')
+    const [email, setEmail] = useState()
+    const [senha, setSenha] = useState()
+
+    const criarUsuario = () => {
+        createUserWithEmailAndPassword(auth, email, senha)
+        .then( () => {
+            props.navigation.pop()
+        })
+        .catch( (error) => {
+            console.log("Error:" + error)
+        })
+    }
 
     const onChange = (event, selectedDate) => {
         setShow(false)
@@ -56,17 +70,17 @@ const Cadastro = () =>{
                 </View>
                 <View style = {styles.rotulo}>
                     <Text style = {styles.rotuloTextoEmail}>E-mail</Text>
-                    <TextInput style = {styles.rotuloInput}></TextInput>
+                    <TextInput style = {styles.rotuloInput} value= {email} onChangeText ={setEmail}></TextInput>
                 </View>
                 <View style = {styles.rotulo}>
                     <Text style = {styles.rotuloTextoSenha}>Senha</Text>
-                    <TextInput style = {styles.rotuloInput}  secureTextEntry={true}></TextInput>
+                    <TextInput style = {styles.rotuloInput}  secureTextEntry={true} value = {senha} onChangeText ={setSenha}></TextInput>
                 </View>
                 <View style = {styles.rotulo}>
                         <Text style = {styles.rotuloTextoRepetirSenha}>Repetir Senha</Text>
                     <TextInput style = {styles.rotuloInput}  secureTextEntry={true}></TextInput>
                 </View>
-                <TouchableOpacity style = {styles.buttonCadastrar}>
+                <TouchableOpacity style = {styles.buttonCadastrar} onPress = {criarUsuario}>
                     <Text style = {styles.buttonTexto}>Cadastrar</Text>
                 </TouchableOpacity>
             </View>

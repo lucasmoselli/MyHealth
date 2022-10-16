@@ -1,12 +1,23 @@
 
-import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image} from 'react-native';
-import Login from '../components/Login';
+import React, {useState} from 'react';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, TextInput} from 'react-native';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 const Inicial = (props) => { 
 
-  const goToTelaHome = () =>{
-    props.navigation.navigate('Home')
+  const [email, setEmail] = useState()
+  const [senha, setSenha] = useState()
+
+  const autenticarUsuario = () =>{
+    signInWithEmailAndPassword(auth, email, senha)
+    .then( () =>{
+      console.log('wee')
+      props.navigation.navigate('Home')
+    })
+    .catch( (error) => {
+      console.log(error)
+    })
   }
 
   const goToTelaMudarSenha = () => {
@@ -29,9 +40,18 @@ const Inicial = (props) => {
         <Text style = {styles.subtitulo}>Controle as suas vacinas</Text>
         <Text style = {styles.subtitulo}>e fique seguro</Text>
       </View>
-      <Login email = "E-mail" senha = "Senha"></Login>  
+      <View style = {styles.login}>
+            <View style = {styles.loginFlex}>
+                <Text style = {styles.rotuloTexto}>E-mail</Text>
+                <TextInput value = {email} style = {styles.rotuloInput} placeholder = "Digite seu e-mail" onChangeText={setEmail}></TextInput>
+            </View>
+            <View style = {styles.loginFlex}>
+                <Text style = {styles.rotuloTexto}>Senha</Text>
+                <TextInput value = {senha} style = {styles.rotuloInput} secureTextEntry={true} onChangeText={setSenha}></TextInput>
+            </View>
+        </View>  
       <TouchableOpacity style = {styles.buttonEntrar}>
-        <Text style = {styles.buttonTexto} onPress = {goToTelaHome}>Entrar</Text>
+        <Text style = {styles.buttonTexto} onPress = {autenticarUsuario}>Entrar</Text>
        </TouchableOpacity>       
       <TouchableOpacity style = {styles.buttonCriarConta}>
         <Text style = {styles.buttonTexto} onPress = {goToTelaCriarConta}> Criar minha Conta</Text>
@@ -122,7 +142,33 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     paddingVertical: 5,
     marginTop: 50,
-  }
+  },
+  
+  login:{
+    marginTop: 30,
+    flexDirection: "column"
+  },
+
+  loginFlex:{
+    marginBottom: 30,
+    flexDirection: "row"
+    },
+
+  rotuloTexto:{
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+    paddingLeft: 30,
+    paddingRight: 10
+  },
+
+  rotuloInput:{
+    color: "#419ED7",
+    backgroundColor: "white",
+    width:275,
+    height: 35,
+    
+  },
 })
 
 export default Inicial;

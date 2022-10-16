@@ -60,7 +60,7 @@ const CriarVacina = () =>{
                     <TextInput style = {styles.rotuloInput}></TextInput>
                 </View>
                 <View style = {styles.rotulo}>
-                    <Text style = {styles.rotuloTextoSenha}>Senha</Text>
+                    <Text style = {styles.rotuloTextoSenha}>Dose</Text>
                 </View>
                 <View style = {styles.rotulo}>
                         <Text style = {styles.rotuloTextoRepetirSenha}>Comprovante</Text>

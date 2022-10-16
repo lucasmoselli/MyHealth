@@ -6,6 +6,8 @@ import MinhasVacinas from "./MinhasVacinas";
 import MyDrawer from "../components/MyDrawer";
 import ProximasVacinas from "./ProximasVacinas";
 import CriarVacina from "./CriarVacina";
+import Inicial from "./Inicial";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Drawer = createDrawerNavigator()
 
