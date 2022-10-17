@@ -9,6 +9,7 @@ const Inicial = (props) => {
   const [email, setEmail] = useState()
   const [senha, setSenha] = useState()
 
+
   const autenticarUsuario = () =>{
     signInWithEmailAndPassword(auth, email, senha)
     .then( () =>{

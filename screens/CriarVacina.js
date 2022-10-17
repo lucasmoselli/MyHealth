@@ -1,15 +1,25 @@
 import React, { useState} from "react";
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, Button} from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import MyHealth from "../components/MyHealth";
+import { launchImageLibrary} from 'react-native-image-picker'
 
 const CriarVacina = () =>{
 
+    const [vacina, setVacina] = useState()
+    const [dose, setDose] = useState()
+    const [comprovante, setComprovante] = useState()
     const [date, setDate] = useState(new Date())
     const [date2, setDate2] = useState(new Date())
     const [show, setShow] = useState(false)
     const [text, setText] = useState('')
     const [text2, setText2] = useState('')
+
+    const openImagePicker = () => {
+        launchImageLibrary({mediaType: 'photo'}, (response) => {
+            setComprovante(response.assets[0].comprovante)
+        })
+    }
 
     const onChange = (event, selectedDate) => {
         setShow(false)
@@ -36,6 +46,7 @@ const CriarVacina = () =>{
     
     return(
         <View>
+            <MyHealth></MyHealth>
             <View style = {styles.body}>
                 <View style = {styles.rotulo}>
                     <Text style = {styles.rotuloTextoData}>Data de Vacinação</Text>
@@ -56,14 +67,21 @@ const CriarVacina = () =>{
                     )}
                 </View>
                 <View style = {styles.rotulo}>
-                    <Text style = {styles.rotuloTextoEmail}>Vacina</Text>
-                    <TextInput style = {styles.rotuloInput}></TextInput>
+                    <Text style = {styles.rotuloTextoVacina}>Vacina</Text>
+                    <TextInput style = {styles.rotuloInput} value = {vacina} onChangeText = {setVacina}></TextInput>
                 </View>
                 <View style = {styles.rotulo}>
-                    <Text style = {styles.rotuloTextoSenha}>Dose</Text>
+                    <Text style = {styles.rotuloTextoDose}>Dose</Text>
                 </View>
                 <View style = {styles.rotulo}>
-                        <Text style = {styles.rotuloTextoRepetirSenha}>Comprovante</Text>
+                    <Text style = {styles.rotuloTextoComprovante} >Comprovante</Text>
+                    <Button title = "Selecione o comprovante" onPress={openImagePicker}></Button>
+                    {
+                        comprovante ? 
+                        <Image source ={{comprovante: comprovante}}/>
+                        :
+                        null
+                    }
                 </View>
                 <View style = {styles.rotulo}>
                     <Text style = {styles.rotuloTextoData}>Próxima Vacinação</Text>
@@ -122,15 +140,8 @@ const styles = StyleSheet.create({
         paddingLeft: 20
     },
 
-    rotuloTextoSexo:{
-        justifyContent: "center",
-        width: "40%",
-        color: "white",
-        fontSize: 16,
-        paddingLeft: 110
-    },
 
-    rotuloTextoEmail:{
+    rotuloTextoVacina:{
         justifyContent: "center",
         width: "40%",
         color: "white",
@@ -138,7 +149,7 @@ const styles = StyleSheet.create({
         paddingLeft: 100
     },
 
-    rotuloTextoSenha:{
+    rotuloTextoDose:{
         justifyContent: "center",
         width: "40%",
         color: "white",
@@ -146,7 +157,7 @@ const styles = StyleSheet.create({
         paddingLeft: 100
     },
 
-    rotuloTextoRepetirSenha:{
+    rotuloTextoComprovante:{
         justifyContent: "center",
         width: "40%",
         color: "white",
