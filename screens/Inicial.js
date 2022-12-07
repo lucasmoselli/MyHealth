@@ -21,6 +21,10 @@ const Inicial = (props) => {
     })
   }
 
+  const goToMenu = () => {
+    props.navigation.navigate('Home')
+  }
+
   const goToTelaMudarSenha = () => {
     props.navigation.navigate('MudarSenha')
   }

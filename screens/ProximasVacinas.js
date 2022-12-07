@@ -1,86 +1,41 @@
-import React from "react";
+import React, {useState, useEffect}from "react";
 import { View, StyleSheet, TouchableOpacity, Text, FlatList, Image} from 'react-native'
-
-
-export let ListaVacinas = [
-    {
-      id: 1,
-      vacina: 'BCG',
-      data: '2022-09-21',
-      dose: 1,
-      urlImage: 'http://',
-      proximaVacina: '2023-09-21',
-    },
-    {
-      id: 2,
-      vacina: 'Tetano',
-      data: '2022-09-20',
-      dose: 1,
-      urlImage: 'http://',
-      proximaVacina: '2025-05-20',
-    },
-    {
-      id: 3,
-      vacina: 'Dengue',
-      data: '2022-09-19',
-      dose: 1,
-      urlImage: 'http://',
-      proximaVacina: '2024-09-23',
-    },
-    {
-      id: 4,
-      vacina: 'COVID-19',
-      data: '2022-03-03',
-      dose: 1,
-      urlImage: 'http://',
-      proximaVacina: '2024-03-03',
-    },
-    {
-      id: 5,
-      vacina: 'POLIO',
-      data: '2022-09-21',
-      dose: 1,
-      urlImage: 'http://',
-      proximaVacina: '2024-09-23',
-    },
-    {
-      id: 6,
-      vacina: 'SARAMPO',
-      data: '2022-09-21',
-      dose: 1,
-      urlImage: 'http://',
-      proximaVacina: '2024-09-23',
-    },
-  ];
-  
-
+import { db } from "../config/firebase";
+import { onSnapshot, query, collection } from "firebase/firestore";
+import ProxVacina from "../components/ProxVacina";
 const ProximasVacinas = (props) =>{
     
     const goToTelaCriarVacinas = () => {
         props.navigation.navigate('CriarVacina')
     }
 
-    function Item({ vacina, proximaVacina}) {
-        return (
-          <TouchableOpacity
-            style={styles.containerFlatList}>
-            <Text style = {styles.textoVacina}>{vacina}</Text>
-            <Text style = {styles.proxVacina}>{proximaVacina}</Text>
-          </TouchableOpacity>
-        )
-    }
+    const [vacinas, setVacinas] = useState([])
+
+    const q = query(collection(db, "vacinas"))
+
+    useEffect(() => {
+      onSnapshot(q, (result) => {
+        const listaVacinas = []
+        result.forEach((doc) => {
+          listaVacinas.push({
+            id: doc.id,
+            nome: doc.data().vacina,
+            data1: doc.data().data1,
+            data2: doc.data().data2,
+          })
+        })
+        setVacinas(listaVacinas)
+      })
+    }, [])
+    
 
     return (
         <View style={styles.container}>
           <FlatList
-            data={ListaVacinas}
-            renderItem={({item}) => (
-              <Item
-                id={item.id}
-                vacina={item.vacina}
-                proximaVacina={item.proximaVacina}
-              />
-            )}
+            data={vacinas}
+            renderItem={({item}) => 
+              <ProxVacina navigation = {props.navigation} item = {item}/>
+            }
             key = {1}
             numColumns={1}
             style={styles.flatlist}

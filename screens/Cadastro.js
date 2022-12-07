@@ -3,7 +3,8 @@ import { View, StyleSheet, Text, TextInput, TouchableOpacity, Button, Platform, 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth} from '../config/firebase'
-
+import { addDoc, collection } from "firebase/firestore";
+import { db} from '../config/firebase.js'
 import MyHealth from "../components/MyHealth";
 
 
@@ -14,8 +15,10 @@ const Cadastro = (props) =>{
     const [text, setText] = useState('')
     const [email, setEmail] = useState()
     const [senha, setSenha] = useState()
+    const [nome, setNome] = useState()
 
-    const criarUsuario = () => {
+
+  const criarUsuario = () => {
         createUserWithEmailAndPassword(auth, email, senha)
         .then( () => {
             props.navigation.pop()
@@ -23,7 +26,7 @@ const Cadastro = (props) =>{
         .catch( (error) => {
             console.log("Error:" + error)
         })
-    }
+    } 
 
     const onChange = (event, selectedDate) => {
         setShow(false)
@@ -45,7 +48,7 @@ const Cadastro = (props) =>{
             <View style = {styles.body}>
                 <View style = {styles.rotulo}>
                     <Text style = {styles.rotuloTextoNome}>Nome Completo</Text>
-                    <TextInput style = {styles.rotuloInput}></TextInput>
+                    <TextInput style = {styles.rotuloInput}  onChangeText ={setNome} value = {nome}></TextInput>
                 </View>
                 <View style = {styles.rotulo}>
                     <Text style = {styles.rotuloTextoSexo}>Sexo</Text>
